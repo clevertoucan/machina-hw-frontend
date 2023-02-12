@@ -42,6 +42,55 @@
   font-size: large;
 }
 
+.Sidebar-selector {
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.FileViewer-no-file {
+  margin-left: 400px;
+  height: 100vh;
+  width: calc(100vw - 400px);
+  position: fixed;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  font-size: 30px;
+  color: #6b6b6b;
+  background-color: lightgrey;
+}
+
+.FileViewer-csv-file {
+  margin-left: 400px;
+  height: 100vh;
+  width: calc(100vw - 400px);
+  position: fixed;
+  text-align: center;
+  color: #6b6b6b;
+  background-color: white;
+}
+.FileViewer-json-file {
+  margin-left: 400px;
+  height: 100vh;
+  width: calc(100vw - 400px);
+  position: fixed;
+  color: #6b6b6b;
+  background-color: white;
+}
+
+.FileViewer-log-file {
+  margin-left: 400px;
+  height: 100vh;
+  width: calc(100vw - 400px);
+  position: fixed;
+  color: #6b6b6b;
+  background-color: white;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
