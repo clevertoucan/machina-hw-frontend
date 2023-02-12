@@ -17,7 +17,7 @@ function SidebarFile({ fileName, path, setViewerPath }) {
       variant="text"
       sx={{ width: "100%", textAlign: "left", display: "block" }}
       onClick={() => {
-        setViewerPath(path);
+        setViewerPath({ path, filename: fileName });
       }}
     >
       <Typography>{fileName}</Typography>

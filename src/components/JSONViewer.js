@@ -1,6 +1,14 @@
 import ReactJSON from "react-json-view";
+import { useEffect, useState } from "react";
 
 function JSONViewer({ viewerData }) {
+  const [jsonData, setJSONData] = useState({});
+
+  useEffect(() => {
+    viewerData.text().then((data) => setJSONData(JSON.parse(data)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewerData]);
+
   return (
     <div
       style={{
@@ -11,7 +19,7 @@ function JSONViewer({ viewerData }) {
         fontSize: "16px",
       }}
     >
-      <ReactJSON src={viewerData} collapsed={1} displayDataTypes={false} />
+      <ReactJSON src={jsonData} collapsed={1} displayDataTypes={false} />
     </div>
   );
 }

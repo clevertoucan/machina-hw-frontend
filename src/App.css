@@ -13,6 +13,12 @@
   }
 }
 
+.DownloadButton {
+  position: fixed;
+  top: 25px;
+  right: 50px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -64,25 +70,7 @@
   background-color: lightgrey;
 }
 
-.FileViewer-csv-file {
-  margin-left: 400px;
-  height: 100vh;
-  width: calc(100vw - 400px);
-  position: fixed;
-  text-align: center;
-  color: #6b6b6b;
-  background-color: white;
-}
-.FileViewer-json-file {
-  margin-left: 400px;
-  height: 100vh;
-  width: calc(100vw - 400px);
-  position: fixed;
-  color: #6b6b6b;
-  background-color: white;
-}
-
-.FileViewer-log-file {
+.FileViewer-with-file {
   margin-left: 400px;
   height: 100vh;
   width: calc(100vw - 400px);

@@ -12,20 +12,22 @@ function CSVViewer({ viewerData }) {
     if (viewerData) {
       // This sanitization step is necessary to sanitize non-standard CSV metadata
       setIsLoading(true);
-      const lines = viewerData.split("\n");
-      let index = 0;
-      for (let i = 0; i < lines.length; i++) {
-        if (lines[i].includes(",")) {
-          index = i;
-          break;
+      viewerData.text().then((data) => {
+        const lines = data.split("\n");
+        let index = 0;
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].includes(",")) {
+            index = i;
+            break;
+          }
         }
-      }
-      const sanitizedLines = lines.slice(index);
-      const sanitizedData = sanitizedLines.join("\n");
-      Papa.parse(sanitizedData, {
-        header: true,
-        dynamicTyping: true,
-        complete: handleDataChange,
+        const sanitizedLines = lines.slice(index);
+        const sanitizedData = sanitizedLines.join("\n");
+        Papa.parse(sanitizedData, {
+          header: true,
+          dynamicTyping: true,
+          complete: handleDataChange,
+        });
       });
     }
   }, [viewerData]);
@@ -54,7 +56,9 @@ function CSVViewer({ viewerData }) {
     return (
       <div
         style={{
-          height: "calc(100vh - 70px)",
+          height: "calc(100vh - 90px)",
+          marginRight: "30px",
+          marginLeft: "20px",
         }}
       >
         <DataGrid

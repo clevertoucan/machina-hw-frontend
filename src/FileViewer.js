@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import CSVViewer from "./components/CSVViewer";
-import axiosInstance from "./axios-config";
 import JSONViewer from "./components/JSONViewer";
 import LogViewer from "./components/LogViewer";
 
-function FileViewer({ viewerPath }) {
+const baseUrl = "http://localhost:3001/fs/path";
+
+function FileViewer({ fileInfo }) {
   const [viewerData, setViewerData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [currentViewer, setCurrentViewer] = useState(null);
+  const [downloadLink, setDownloadLink] = useState(null);
+  const viewerPath = fileInfo?.path;
+  const filename = fileInfo?.filename;
 
   useEffect(() => {
     if (viewerPath) {
       setIsLoading(true);
+      fetch(baseUrl + viewerPath)
+        .then((response) => response.blob())
+        .then((blob) => {
+          setViewerData(blob);
+        });
       if (viewerPath.endsWith(".log")) {
         setIsLoading(false);
         setCurrentViewer("log");
-      } else {
-        axiosInstance.get("/fs/path" + viewerPath).then((response) => {
-          setViewerData(response.data);
-        });
       }
     }
   }, [viewerPath]);
@@ -32,7 +37,10 @@ function FileViewer({ viewerPath }) {
         setCurrentViewer("json");
       } else if (viewerPath.endsWith(".log")) {
         setCurrentViewer("log");
+      } else {
+        setCurrentViewer(null);
       }
+      setDownloadLink(URL.createObjectURL(viewerData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewerData]);
@@ -45,31 +53,27 @@ function FileViewer({ viewerPath }) {
         </div>
       </>
     );
-  } else if (isLoading || !currentViewer) {
+  } else if (isLoading) {
     return <div className="FileViewer-no-file">Loading file...</div>;
-  } else if (currentViewer === "csv") {
+  } else {
     return (
-      <div className="FileViewer-csv-file">
-        <h2>{viewerPath}</h2>
-        <CSVViewer viewerData={viewerData} />
-      </div>
-    );
-  } else if (currentViewer === "json") {
-    return (
-      <div className="FileViewer-json-file">
+      <div className="FileViewer-with-file">
         <div style={{ textAlign: "center" }}>
           <h2>{viewerPath}</h2>
+          <a className="DownloadButton" href={downloadLink} download={filename}>
+            Download File
+          </a>
         </div>
-        <JSONViewer viewerData={viewerData} />
-      </div>
-    );
-  } else if (currentViewer === "log") {
-    return (
-      <div className="FileViewer-log-file">
-        <div style={{ textAlign: "center" }}>
-          <h2>{viewerPath}</h2>
-        </div>
-        <LogViewer viewerPath={viewerPath} />
+        {currentViewer === "csv" && (
+          <div style={{ textAlign: "center" }}>
+            <CSVViewer viewerData={viewerData} />
+          </div>
+        )}
+        {currentViewer === "json" && <JSONViewer viewerData={viewerData} />}
+        {currentViewer === "log" && <LogViewer viewerPath={viewerPath} />}
+        {currentViewer === null && (
+          <div style={{ textAlign: "center" }}>Unsupported File Type</div>
+        )}
       </div>
     );
   }

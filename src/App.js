@@ -42,7 +42,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Sidebar fileTree={fileTree} setViewerPath={setViewerPath} />
-      <FileViewer viewerPath={viewerPath} />
+      <FileViewer fileInfo={viewerPath} />
     </ThemeProvider>
   );
 }
