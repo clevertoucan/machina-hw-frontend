@@ -47,6 +47,7 @@ function SidebarTree({ fileTree, path, setViewerPath }) {
         if (value === null) {
           return (
             <SidebarFile
+              key={path + "/" + key + "FileButton"}
               fileName={key}
               path={path + "/" + key}
               setViewerPath={setViewerPath}
@@ -160,14 +161,14 @@ function SidebarList({ setViewerPath }) {
       const path =
         "/" + customerName + "/" + jobName + "/" + container + "/" + value;
       fileButtons.push(
-        <>
+        <div key={path + "FileButton"}>
           <div style={{ height: "20px" }}></div>
           <SidebarFile
             fileName={value}
             path={path}
             setViewerPath={setViewerPath}
           ></SidebarFile>
-        </>
+        </div>
       );
     });
   });
@@ -193,7 +194,9 @@ function SidebarList({ setViewerPath }) {
               sx={{ width: "150px" }}
             >
               {customers.map((customer) => (
-                <MenuItem value={customer.ID}>{customer.name}</MenuItem>
+                <MenuItem key={customer.ID + "Customer"} value={customer.ID}>
+                  {customer.name}
+                </MenuItem>
               ))}
             </Select>
           </div>
@@ -207,7 +210,9 @@ function SidebarList({ setViewerPath }) {
               sx={{ width: "150px" }}
             >
               {fileTypes.map((type) => (
-                <MenuItem value={type}>{type}</MenuItem>
+                <MenuItem key={type + "FileType"} value={type}>
+                  {type}
+                </MenuItem>
               ))}
             </Select>
           </div>
@@ -221,7 +226,9 @@ function SidebarList({ setViewerPath }) {
               sx={{ width: "150px" }}
             >
               {jobs.map((job) => (
-                <MenuItem value={job.ID}>{job.name}</MenuItem>
+                <MenuItem key={job.ID + "Job"} value={job.ID}>
+                  {job.name}
+                </MenuItem>
               ))}
             </Select>
           </div>
@@ -235,7 +242,9 @@ function SidebarList({ setViewerPath }) {
               sx={{ width: "150px" }}
             >
               {runs.map((run) => (
-                <MenuItem value={run.ID}>{run.influx_UUID}</MenuItem>
+                <MenuItem key={run.ID + "Run"} value={run.ID}>
+                  {run.influx_UUID}
+                </MenuItem>
               ))}
             </Select>
           </div>
