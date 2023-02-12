@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FileViewer from "./FileViewer";
+
+// defines styles for MUI components
 const theme = createTheme({
   typography: {
     button: {
